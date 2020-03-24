@@ -1,0 +1,17 @@
+{
+    "${badge_color}": "brightgreen",
+    "${changelog_file}": "CHANGELOG.md",
+    "${codeofconduct_file}": "CODE_OF_CONDUCT.md",
+    "${contributing_file}": "CONTRIBUTING.md",
+    "${license_file}": "LICENSE.txt",
+    "${license_type}": "MIT",
+    "${merge_term}": "pull request",
+    "${project_name}": "XUnityPlayer",
+    "${readme_file}": "README.md",
+    "${repo_host}": "github",
+    "${repo_link}": "https://github.com/elmernocon/xunityplayer",
+    "${test_project_path}": "tests/XPlayer.Test",
+    "${unity_version}": "2019.2.6",
+    "${unitywhatsnew_link}": "https://unity3d.com/unity/whats-new",
+    "${version}": "1.0"
+}

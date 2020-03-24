@@ -1,0 +1,2 @@
+include ':xplayer', ':xample'
+rootProject.name='XPlayer'

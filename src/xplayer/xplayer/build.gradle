@@ -1,0 +1,77 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    // Unity dependencies
+    compileOnly files('../../../refs/Unity/2019.2.6f1/classes.jar')
+}
+
+android.libraryVariants.all { variant ->
+
+    // Get task names.
+    String variantName = "${variant.name.capitalize()}" // 'Debug' or 'Release'
+    String deployTaskGroup = "archive"
+    String deployTaskName = "${deployTaskGroup}${variantName}" // 'archiveDebug' or 'archiveRelease'
+    String dependencyTaskName = "assemble${variantName}" // 'assembleDebug' or 'assembleRelease'
+
+    // Setup bundle name.
+    String bundlePrefix = "com.unity3d."
+    String bundleName = project.name
+    String bundleFileType = "aar"
+    String bundleIdentifier = "${bundlePrefix}${bundleName}.${bundleFileType}"
+
+    // Get source paths.
+    String sourceFolder = "${buildDir.getPath()}/outputs/${bundleFileType}/"
+    String sourceFileName = "${bundleName}-${variant.name}.${bundleFileType}"
+
+    // Get target paths.
+    String pathToRepoFolder = "../.."
+    String repoFolder = "${rootDir.getPath()}/${pathToRepoFolder}"
+    String targetSubFolder = "bin/${variantName}/${bundleName}"
+    String targetFolder = "${repoFolder}/${targetSubFolder}/"
+    String targetFileName = bundleIdentifier
+
+
+    // Create tasks.
+    task(deployTaskName, dependsOn: dependencyTaskName, type: Copy) {
+        from(sourceFolder)
+        into(targetFolder)
+        include(sourceFileName)
+        rename(sourceFileName, targetFileName)
+    }.group = deployTaskGroup
+
+    // Log paths.
+    println()
+    println("! ${sourceFolder}${sourceFileName}")
+    println("→ ${targetFolder}${targetFileName}")
+}

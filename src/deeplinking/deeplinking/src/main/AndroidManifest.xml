@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.unity3d.deeplinking">
+    <application>
+        <meta-data
+            android:name="com.unity3d.listener.deeplinking"
+            android:value="com.unity3d.deeplinking.DeepLinkingActivity" />
+    </application>
+</manifest>
