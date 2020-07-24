@@ -1,0 +1,2 @@
+include ':braintreedropin', ':firebasemessaging'
+rootProject.name='BraintreeDropIn'

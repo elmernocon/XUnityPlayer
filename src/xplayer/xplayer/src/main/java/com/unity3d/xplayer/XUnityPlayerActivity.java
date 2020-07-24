@@ -1,5 +1,6 @@
 package com.unity3d.xplayer;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -11,10 +12,12 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.unity3d.player.UnityPlayer;
 import com.unity3d.player.UnityPlayerActivity;
 
 public final class XUnityPlayerActivity extends UnityPlayerActivity {
@@ -182,6 +185,13 @@ public final class XUnityPlayerActivity extends UnityPlayerActivity {
                 continue;
             }
             log("Created '" + className + "' instance.");
+
+            // NOTE: Some plugins need access to the UnityPlayerActivity need to be careful with this.
+
+            // Set the activity for this listener.
+            listener.setActivity(this);
+
+            // Add the activity into a list to be used by a dispatcher.
             listeners.add(listener);
         }
 
@@ -211,8 +221,11 @@ public final class XUnityPlayerActivity extends UnityPlayerActivity {
 
     @Override
     protected final void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         init();
+        if (dispatcher != null) {
+            dispatcher.onPreCreate(savedInstanceState);
+        }
+        super.onCreate(savedInstanceState);
         if (dispatcher != null) {
             dispatcher.setIntent(getIntent());
             dispatcher.setContext(this);
@@ -221,7 +234,18 @@ public final class XUnityPlayerActivity extends UnityPlayerActivity {
     }
 
     @Override
+    protected final void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        if (dispatcher != null) {
+            dispatcher.onPostCreate(savedInstanceState);
+        }
+    }
+
+    @Override
     protected final void onRestart() {
+        if (dispatcher != null) {
+            dispatcher.onPreRestart();
+        }
         super.onRestart();
         if (dispatcher != null) {
             dispatcher.onRestart();
@@ -230,6 +254,9 @@ public final class XUnityPlayerActivity extends UnityPlayerActivity {
 
     @Override
     protected final void onStart() {
+        if (dispatcher != null) {
+            dispatcher.onPreStart();
+        }
         super.onStart();
         if (dispatcher != null) {
             dispatcher.onStart();
@@ -238,6 +265,9 @@ public final class XUnityPlayerActivity extends UnityPlayerActivity {
 
     @Override
     protected final void onResume() {
+        if (dispatcher != null) {
+            dispatcher.onPreResume();
+        }
         super.onResume();
         if (dispatcher != null) {
             dispatcher.onResume();
@@ -245,7 +275,18 @@ public final class XUnityPlayerActivity extends UnityPlayerActivity {
     }
 
     @Override
+    protected final void onPostResume() {
+        super.onPostResume();
+        if (dispatcher != null) {
+            dispatcher.onPostResume();
+        }
+    }
+
+    @Override
     protected final void onPause() {
+        if (dispatcher != null) {
+            dispatcher.onPrePause();
+        }
         super.onPause();
         if (dispatcher != null) {
             dispatcher.onPause();
@@ -254,6 +295,9 @@ public final class XUnityPlayerActivity extends UnityPlayerActivity {
 
     @Override
     protected final void onStop() {
+        if (dispatcher != null) {
+            dispatcher.onPreStop();
+        }
         super.onStop();
         if (dispatcher != null) {
             dispatcher.onStop();
@@ -262,6 +306,9 @@ public final class XUnityPlayerActivity extends UnityPlayerActivity {
 
     @Override
     protected final void onDestroy() {
+        if (dispatcher != null) {
+            dispatcher.onPreDestroy();
+        }
         super.onDestroy();
         if (dispatcher != null) {
             dispatcher.onStop();
@@ -416,5 +463,16 @@ public final class XUnityPlayerActivity extends UnityPlayerActivity {
     }
 
     // endregion Activity Methods
+
+    // region UnityPlayerActivity Methods
+
+    public final void quitUnityPlayer() {
+        if (mUnityPlayer != null) {
+            mUnityPlayer.quit();
+            mUnityPlayer = null;
+        }
+    }
+
+    // endregion UnityPlayerActivity Methods
 
 }

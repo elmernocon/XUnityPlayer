@@ -28,6 +28,16 @@
                     android:host="deeplink" />
             </intent-filter>
         </activity>
+        <!-- Add com.braintreepayments.api.BraintreeBrowserSwitchActivity. -->
+        <activity android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="${applicationId}.braintree" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
         <!-- Add GameObjectAllListener instance. -->
         <meta-data
             android:name="com.unity3d.listener.all"

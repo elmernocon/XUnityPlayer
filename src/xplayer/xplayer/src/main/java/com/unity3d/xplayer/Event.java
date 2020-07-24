@@ -18,6 +18,8 @@ public class Event {
 
     private static final String DATA = "data";
 
+    public static int INDENT_SPACES = 4;
+
     // endregion Statics
 
     // region Fields
@@ -215,7 +217,16 @@ public class Event {
     @NonNull
     @Override
     public String toString() {
-        return this.name.toString();
+        return toString(INDENT_SPACES);
+    }
+
+    public String toString(int indentSpaces) {
+        try {
+            return this.name.toString(indentSpaces);
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage(), e);
+        }
+        return "";
     }
 
     private void initData() {

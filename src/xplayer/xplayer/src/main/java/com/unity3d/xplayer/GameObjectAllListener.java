@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
+import androidx.annotation.Nullable;
+
 public final class GameObjectAllListener extends GameObjectListener {
 
     // region Statics
@@ -38,8 +40,21 @@ public final class GameObjectAllListener extends GameObjectListener {
     }
 
     @Override
+    public final void onPreCreate(Bundle savedInstanceState) {
+    }
+
+    @Override
     public final void onCreate(Bundle savedInstanceState) {
         sendEvent("onCreate");
+    }
+
+    @Override
+    public final void onPostCreate(@Nullable Bundle savedInstanceState) {
+        sendEvent("onPostCreate");
+    }
+
+    @Override
+    public final void onPreRestart() {
     }
 
     @Override
@@ -48,8 +63,16 @@ public final class GameObjectAllListener extends GameObjectListener {
     }
 
     @Override
+    public final void onPreStart() {
+    }
+
+    @Override
     public final void onStart() {
         sendEvent("onRestart");
+    }
+
+    @Override
+    public final void onPreResume() {
     }
 
     @Override
@@ -58,13 +81,30 @@ public final class GameObjectAllListener extends GameObjectListener {
     }
 
     @Override
+    public final void onPostResume() {
+        sendEvent("onPostResume");
+    }
+
+    @Override
+    public final void onPrePause() {
+    }
+
+    @Override
     public final void onPause() {
         sendEvent("onPause");
     }
 
     @Override
+    public final void onPreStop() {
+    }
+
+    @Override
     public final void onStop() {
         sendEvent("onStop");
+    }
+
+    @Override
+    public final void onPreDestroy() {
     }
 
     @Override

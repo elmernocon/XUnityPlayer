@@ -21,6 +21,12 @@ public class GameObjectListener extends ActivityEventListener {
 
     private String methodName;
 
+    private static int IndentSpaces = 4;
+
+    public static void setIndentSpaces(int indentSpaces) {
+        IndentSpaces = indentSpaces;
+    }
+
     // endregion Fields
 
     // region Constructor
@@ -132,7 +138,12 @@ public class GameObjectListener extends ActivityEventListener {
     }
 
     public void sendJson(JSONObject jsonObject) {
-        sendMessage(jsonObject.toString());
+        try {
+            String jsonString = jsonObject.toString(IndentSpaces);
+            sendMessage(jsonString);
+        } catch (JSONException e) {
+            log(e.getMessage(), Log.ERROR);
+        }
     }
 
     public void sendEvent(String eventName) {
@@ -140,7 +151,7 @@ public class GameObjectListener extends ActivityEventListener {
     }
 
     public void sendEvent(Event event) {
-        sendMessage(event.toString());
+        sendMessage(event.toString(IndentSpaces));
     }
 
     // endregion Methods

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.synergy88.braintreedropin">
+    <application>
+        <meta-data
+            android:name="com.unity3d.listener.braintreedropin"
+            android:value="com.synergy88.braintreedropin.BraintreeDropInActivity" />
+    </application>
+</manifest>

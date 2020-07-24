@@ -38,7 +38,7 @@ public class Logger : MonoBehaviour
     private GUILayoutOption _screenMinHeight;
 
     private GUILayoutOption _screenMinWidth;
-    
+
     #endregion
 
     #region Methods
@@ -55,6 +55,9 @@ public class Logger : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        
+        new AndroidJavaClass("com.unity3d.xplayer.GameObjectListener")
+           .CallStatic("setIndentSpaces", 4);
         
         _screenSize = new Vector2Int(Screen.width, Screen.height);
         _screenMinHeight = GUILayout.MinHeight(_screenSize.y);

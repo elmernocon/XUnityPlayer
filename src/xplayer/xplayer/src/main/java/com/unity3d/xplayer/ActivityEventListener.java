@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
+import androidx.annotation.Nullable;
+
 public class ActivityEventListener {
 
     // region Statics
@@ -23,6 +25,8 @@ public class ActivityEventListener {
     private Context context;
 
     private Intent intent;
+
+    private XUnityPlayerActivity activity;
 
     // endregion Fields
 
@@ -50,6 +54,14 @@ public class ActivityEventListener {
 
     protected void onSetIntent(Intent intent) {}
 
+    protected final XUnityPlayerActivity getActivity() {
+        return activity;
+    }
+
+    final void setActivity(XUnityPlayerActivity activity) {
+        this.activity = activity;
+    }
+
     // endregion Properties
 
     // region Methods
@@ -66,7 +78,17 @@ public class ActivityEventListener {
         log(msg, LOG_PRIORITY);
     }
 
+    public void onPreCreate(Bundle savedInstanceState) {
+
+    }
+
     public void onCreate(Bundle savedInstanceState) {
+
+    }
+
+    public void onPostCreate(@Nullable Bundle savedInstanceState) {}
+
+    public void onPreRestart() {
 
     }
 
@@ -74,7 +96,15 @@ public class ActivityEventListener {
 
     }
 
+    public void onPreStart() {
+
+    }
+
     public void onStart() {
+
+    }
+
+    public void onPreResume() {
 
     }
 
@@ -82,11 +112,27 @@ public class ActivityEventListener {
 
     }
 
+    public void onPostResume() {
+
+    }
+
+    public void onPrePause() {
+
+    }
+
     public void onPause() {
 
     }
 
+    public void onPreStop() {
+
+    }
+
     public void onStop() {
+
+    }
+
+    public void onPreDestroy() {
 
     }
 
